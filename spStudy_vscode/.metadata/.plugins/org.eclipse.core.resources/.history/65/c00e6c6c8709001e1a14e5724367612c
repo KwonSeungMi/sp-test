@@ -1,0 +1,94 @@
+package test;
+
+import java.util.ArrayList;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
+
+public class MyJson {
+
+	public static void main(String[] args) {
+		JsonElement jsonElement = JsonParser.parseString("{\r\n"
+				+ "\"name\":\"spiderman\",\r\n"
+				+ "\"age\":45,\r\n"
+				+ "\"married\":true,\r\n"
+				+ "\"specialty\":[\"martial art\", \"gun\"], \"vaccine\":{\"1st\":\"done\",\"2nd\":\"expected\",\"3rd\":null},\r\n"
+				+ "\"children\": [{\"name\":\"spiderboy\", \"age\":10}, {\"name\":\"spidergirl\", \"age\":8}], \"adress\":null\r\n"
+				+ "}");
+		System.out.println(jsonElement.toString());
+		
+		
+		JsonObject object = (JsonObject)jsonElement;
+		object.get("name").toString(); // 따옴표 있
+		object.get("name").getAsString(); // 따옴표 없이 value 
+		
+		System.out.println("name(age) : " + object.get("name").getAsString() + "(" + object.get("age").getAsString() + ")");
+		
+		
+		JsonArray array = (JsonArray) object.get("children");
+		JsonObject spiderGirl = array.get(1).getAsJsonObject();
+		
+		System.out.println("name(age) : " + object.get("name").getAsString() + "(" + spiderGirl.get("age").getAsString() + ")");
+
+		
+		//class로 추출
+		//Gson gson = new Gson();
+		//Children kv = gson.fromJson(jsonElement, Children.class);
+		
+		//key 추출
+		ArrayList<String> objectKeys = new ArrayList<String>( object.keySet());
+		
+		for(int i = 0; i<objectKeys.size(); i++){
+			System.out.print("Key : "  + objectKeys.get(i) + " / Value Type : ");
+			if(object.get(objectKeys.get(i)).isJsonPrimitive()) {
+				if (object.get(objectKeys.get(i)).getAsJsonPrimitive().isBoolean())
+		            System.out.println("Boolean");;
+		         if (object.get(objectKeys.get(i)).getAsJsonPrimitive().isString())
+			            System.out.println("String");;
+
+		         if (object.get(objectKeys.get(i)).getAsJsonPrimitive().isNumber()){
+			            System.out.println("Number");;
+
+		         }
+			}
+			
+			if (je.isJsonArray()) {
+		         sb = new StringBuilder("array<");
+		         for (JsonElement e : je.getAsJsonArray()) {
+		            sb.append(printClass(e, ident+ "    "));
+		         }
+		         sb.append(">");
+		         return sb.toString();
+		      }
+
+		      if (je.isJsonObject()) {
+		         sb = new StringBuilder("map<\n");
+		         for (Map.Entry<String, JsonElement> e : je.getAsJsonObject().entrySet()) {
+		            sb.append(ident);
+		            sb.append(e.getKey()).append(":");
+		            sb.append(printClass(e.getValue(), ident+"   "));
+		            sb.append("\n");
+		         }
+		         sb.append(ident);
+		         sb.append(">");
+		         return sb.toString();
+		      }
+			
+			
+		
+		}
+
+
+	}
+	
+	public class Children
+	{
+		private String name;
+		private int age;
+	        
+	        // Getters and Setters
+	}
+}

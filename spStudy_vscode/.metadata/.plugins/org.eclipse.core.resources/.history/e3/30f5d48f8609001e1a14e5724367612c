@@ -1,0 +1,52 @@
+package test;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
+
+public class MyJson {
+
+	public static void main(String[] args) {
+		JsonElement jsonElement = JsonParser.parseString("{\r\n"
+				+ "\"name\":\"spiderman\",\r\n"
+				+ "\"age\":45,\r\n"
+				+ "\"married\":true,\r\n"
+				+ "\"specialty\":[\"martial art\", \"gun\"], \"vaccine\":{\"1st\":\"done\",\"2nd\":\"expected\",\"3rd\":null},\r\n"
+				+ "\"children\": [{\"name\":\"spiderboy\", \"age\":10}, {\"name\":\"spidergirl\", \"age\":8}], \"adress\":null\r\n"
+				+ "}");
+		System.out.println(jsonElement.toString());
+		
+		
+		JsonObject object = (JsonObject)jsonElement;
+		object.get("name").toString(); // 따옴표 있
+		object.get("name").getAsString(); // 따옴표 없이 value 
+		
+		System.out.println("name(age) : " + object.get("name").getAsString() + "(" + object.get("age").getAsString() + ")");
+		
+		
+		JsonArray array = (JsonArray) object.get("children");
+		JsonObject spiderGirl = array.get(1).getAsJsonObject();
+		
+		System.out.println("name(age) : " + object.get("name").getAsString() + "(" + spiderGirl.get("age").getAsString() + ")");
+
+
+		Iterable<String> keys = object.keySet();
+
+		for(int i = 0; i<object.keySet().size(); i++){
+			System.out.println(object.keySet());
+		
+		}
+
+
+	}
+	
+	public class Children
+	{
+		private String name;
+		private int age;
+	        
+	        // Getters and Setters
+	}
+}

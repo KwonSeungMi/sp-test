@@ -1,0 +1,21 @@
+package test;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
+
+public class MyJson {
+
+	public static void main(String[] args) {
+		JsonElement jsonElement = JsonParser.parseString("{\r\n"
+				+ "\"name\":\"spiderman\",\r\n"
+				+ "\"age\":45,\r\n"
+				+ "\"married\":true,\r\n"
+				+ "\"specialty\":[\"martial art\", \"gun\"], \"vaccine\":{\"1st\":\"done\",\"2nd\":\"expected\",\"3rd\":null},\r\n"
+				+ "\"children\": [{\"name\":\"spiderboy\", \"age\":10}, {\"name\":\"spidergirl\", \"age\":8}], \"adress\":null\r\n"
+				+ "}");
+		System.out.println(jsonElement.toString());
+		
+		System.out.println(jsonElement.get("name"));
+	}
+}
